@@ -86,6 +86,7 @@ class CatalogController extends Controller
             'address'     => 'required|string|max:255',
             'lat'         => 'required|numeric',
             'lng'         => 'required|numeric',
+            'maps_url'    => 'nullable|string|max:2000',
             'instagram'   => 'nullable|string|max:100',
             'tiktok'      => 'nullable|string|max:100',
             'route_code'  => 'nullable|string|max:10',
