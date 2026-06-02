@@ -43,6 +43,35 @@
     ];
   @endphp
 
+  <section class="home-hero">
+    <div class="home-hero-grid">
+      <div class="hero-summary">
+        <span class="hero-label">Panduan Kampus</span>
+        <h2 class="hero-title">Temukan kuliner, kost, dan rute BRT terbaik di sekitar Unimus</h2>
+        <p class="hero-text">Gunakan filter kategori dan harga untuk menemukan tempat paling relevan dengan cepat. Detail lengkap setiap lokasi membantu kamu merencanakan perjalanan tanpa ribet.</p>
+        <div class="home-feature">
+          <span class="feature-pill">📍 Dekat Kampus</span>
+          <span class="feature-pill">💸 Harga Jelas</span>
+          <span class="feature-pill">🚌 Rute BRT Lengkap</span>
+        </div>
+      </div>
+      <div class="hero-stat-grid">
+        <div class="stat-card">
+          <strong>{{ $items->count() }}</strong>
+          <span>Hasil saat ini</span>
+        </div>
+        <div class="stat-card">
+          <strong>{{ count($categories) }}</strong>
+          <span>Kategori tersedia</span>
+        </div>
+        <div class="stat-card">
+          <strong>4</strong>
+          <span>Opsi rentang harga</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <div class="chip-row">
     @foreach($categories as $key => $cat)
       <a href="{{ route('home', array_merge(request()->except('category'), ['category' => $key])) }}" class="chip {{ $activeCategory === $key ? 'active' : '' }}">

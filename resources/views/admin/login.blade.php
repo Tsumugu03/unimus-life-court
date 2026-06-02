@@ -2,24 +2,33 @@
 @section('title', 'Admin Login')
 
 @section('content')
-  <main class="main">
-    <div style="max-width:420px;margin:80px auto;background:#fff;padding:24px;border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,.08);">
-      <h1 style="font-size:24px;margin-bottom:18px;">Admin Login</h1>
+  <main class="main admin-main">
+    <section class="form-card" style="max-width:460px; margin: 80px auto;">
+      <div style="margin-bottom: 20px;">
+        <h1 style="font-size:28px; margin-bottom: 10px;">Admin Login</h1>
+        <p style="color: var(--text-light); line-height: 1.6;">Masuk untuk mengelola katalog item kuliner, kost, dan BRT dengan panel admin yang lebih rapi.</p>
+      </div>
+
       @if($errors->any())
         <div class="alert alert-error">{{ $errors->first() }}</div>
       @endif
+
       <form method="POST" action="{{ route('admin.login.post') }}">
         @csrf
-        <label style="display:block;margin-bottom:10px;">
-          Username
-          <input type="text" name="username" value="{{ old('username') }}" style="width:100%;padding:10px;border:1px solid #d1d5db;border-radius:12px;margin-top:6px;" />
-        </label>
-        <label style="display:block;margin-bottom:10px;">
-          Password
-          <input type="password" name="password" style="width:100%;padding:10px;border:1px solid #d1d5db;border-radius:12px;margin-top:6px;" />
-        </label>
-        <button type="submit" class="btn-primary" style="width:100%;margin-top:14px;">Masuk</button>
+        <div class="form-grid">
+          <div class="field-group span-2">
+            <label class="field-label">Username</label>
+            <input type="text" name="username" value="{{ old('username') }}" class="field-input" />
+          </div>
+
+          <div class="field-group span-2">
+            <label class="field-label">Password</label>
+            <input type="password" name="password" class="field-input" />
+          </div>
+        </div>
+
+        <button type="submit" class="btn-primary">Masuk</button>
       </form>
-    </div>
+    </section>
   </main>
 @endsection

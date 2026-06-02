@@ -2,46 +2,72 @@
 @section('title', 'Admin Dashboard')
 
 @section('content')
-  <main class="main">
-    <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
-      <div>
-        <h1 style="font-size:24px;margin-bottom:8px;">Admin Dashboard</h1>
-        <p style="color:#64748b;">Kelola katalog item kuliner, kost, dan BRT.</p>
+  <main class="main admin-main">
+    <section class="admin-panel">
+      <div class="admin-panel-hero">
+        <div>
+          <h1>Admin Dashboard</h1>
+          <p>Kelola katalog item kuliner, kost, dan BRT dengan cepat dan nyaman dari satu panel.</p>
+        </div>
+        <a href="{{ route('admin.item.create') }}" class="btn-primary btn-sm">Tambah Item</a>
       </div>
-      <a href="{{ route('admin.item.create') }}" class="btn-primary" style="width:auto;padding:12px 16px;">Tambah Item</a>
-    </div>
 
-    @if(session('success'))
-      <div class="alert alert-success" style="margin-top:18px;">{{ session('success') }}</div>
-    @endif
+      @if(session('success'))
+        <div class="alert alert-success" style="margin-top:18px;">{{ session('success') }}</div>
+      @endif
 
-    <div style="margin-top:24px;">
+      @php
+        $counts = $items->groupBy('category')->map->count();
+      @endphp
+
+      <div class="admin-summary">
+        <div class="admin-summary-card">
+          <strong>{{ $items->count() }}</strong>
+          <span>Total Item</span>
+        </div>
+        <div class="admin-summary-card">
+          <strong>{{ $counts->get('Culinary', 0) }}</strong>
+          <span>Culinary</span>
+        </div>
+        <div class="admin-summary-card">
+          <strong>{{ $counts->get('Kost', 0) }}</strong>
+          <span>Kost</span>
+        </div>
+        <div class="admin-summary-card">
+          <strong>{{ $counts->get('BRT', 0) }}</strong>
+          <span>BRT</span>
+        </div>
+      </div>
+
       @if($items->isEmpty())
-        <div class="empty">Belum ada item. Tambahkan melalui tombol di atas.</div>
+        <div class="empty" style="margin-top:24px;">Belum ada item. Tambahkan melalui tombol di atas.</div>
       @else
-        <div class="grid" style="grid-template-columns:1fr;gap:14px;">
+        <div class="admin-grid-list">
           @foreach($items as $item)
-            <article class="card">
-              <div style="display:flex;gap:14px;align-items:center;">
-                <img src="{{ $item->image_url }}" alt="{{ $item->name }}" style="width:120px;height:90px;object-fit:cover;border-radius:14px;" />
-                <div style="flex:1;">
-                  <h2 style="margin:0 0 8px;font-size:18px;">{{ $item->name }}</h2>
-                  <p style="margin:0 0 6px;color:#64748b;">{{ $item->category }} · {{ $item->price_formatted }}</p>
-                  <p style="margin:0;color:#475569;font-size:13px;">{{ $item->short_desc }}</p>
-                </div>
+            <article class="admin-card">
+              <div class="admin-card-thumb">
+                <img src="{{ $item->image_url }}" alt="{{ $item->name }}" />
+                <span class="admin-card-badge">{{ $item->category }}</span>
               </div>
-              <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap;">
-                <a href="{{ route('admin.item.edit', $item) }}" class="btn-primary" style="background:#2563eb;">Edit</a>
-                <form method="POST" action="{{ route('admin.item.destroy', $item) }}" style="display:inline;">
-                  @csrf
-                  @method('DELETE')
-                  <button type="submit" style="padding:10px 14px;border-radius:12px;border:1px solid #ef4444;color:#ef4444;background:#fff;cursor:pointer;">Hapus</button>
-                </form>
+              <div class="admin-card-body">
+                <div>
+                  <h2 class="admin-card-title">{{ $item->name }}</h2>
+                  <p class="admin-card-meta">{{ $item->price_formatted }}</p>
+                  <p class="admin-card-desc">{{ $item->short_desc }}</p>
+                </div>
+                <div class="admin-card-actions">
+                  <a href="{{ route('admin.item.edit', $item) }}" class="btn-primary btn-sm">Edit</a>
+                  <form method="POST" action="{{ route('admin.item.destroy', $item) }}">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn-secondary btn-sm">Hapus</button>
+                  </form>
+                </div>
               </div>
             </article>
           @endforeach
         </div>
       @endif
-    </div>
+    </section>
   </main>
 @endsection
