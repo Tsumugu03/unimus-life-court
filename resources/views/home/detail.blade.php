@@ -2,84 +2,128 @@
 @section('title', $item->name)
 
 @section('content')
-  <div class="detail-hero">
-    <img src="{{ $item->image_url }}" alt="{{ $item->name }}" style="width:100%;height:100%;object-fit:cover;" />
-    <div class="detail-hero-overlay"></div>
+
+<div class="position-relative" style="aspect-ratio: 16/9; overflow: hidden; background: var(--border);">
+  <img src="{{ $item->image_url }}" alt="{{ $item->name }}" class="w-100 h-100" style="object-fit: cover;">
+  <div class="position-absolute top-0 start-0 w-100 h-100" style="background: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, transparent 60%);"></div>
+  
+  <a href="{{ route('home') }}" class="btn btn-light rounded-circle position-absolute top-3 start-3" style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; font-size: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.15); border: none;">
+    ←
+  </a>
+  
+  <span class="badge position-absolute top-3 end-3" style="background: var(--primary); font-size: 12px; font-weight: 700; padding: 8px 14px; border-radius: 20px;">
+    @if($item->category === 'Culinary') 🍜
+    @elseif($item->category === 'Kost') 🏠
+    @else 🚌
+    @endif
+    {{ $item->category }}
+  </span>
+</div>
+
+<div class="container-fluid px-0">
+  <div class="card" style="margin-top: -24px; margin-left: auto; margin-right: auto; max-width: 100%; border: 1.5px solid var(--border); border-radius: 24px; box-shadow: 0 8px 24px rgba(0,0,0,0.10); position: relative; z-index: 1; margin-left: auto; margin-right: auto; width: calc(100% - 32px); max-width: 960px;">
+    <div class="card-body p-4 p-md-5">
+      <h1 class="mb-3" style="font-size: 28px; font-weight: 800; line-height: 1.2;">{{ $item->name }}</h1>
+      <p class="text-muted mb-3" style="font-size: 15px;">{{ $item->short_desc }}</p>
+      <p style="font-size: 28px; font-weight: 900; color: var(--primary); margin: 0;">
+        {{ $item->price_formatted }}
+        <span style="font-size: 14px; font-weight: 500; color: var(--muted);">{{ $item->price_label }}</span>
+      </p>
+    </div>
   </div>
-  <div class="detail-card">
-    <a href="{{ route('home') }}" class="back-btn" style="cursor:pointer;z-index:10;">←</a>
-    <span class="hero-badge">{{ $item->category }}</span>
-    <h1 class="detail-name">{{ $item->name }}</h1>
-    <p class="detail-shortdesc">{{ $item->short_desc }}</p>
-    <p class="detail-price">{{ $item->price_formatted }} <span>{{ $item->price_label }}</span></p>
-  </div>
-  <div class="detail-main">
-    <div class="detail-section">
-      <p class="detail-section-title">📝 Deskripsi</p>
-      <p class="detail-desc">{{ $item->description }}</p>
+</div>
+
+<main class="detail-main mt-5 pb-5">
+  <div class="container-fluid px-3 px-md-4" style="max-width: 960px; margin-left: auto; margin-right: auto;">
+    
+    {{-- DESCRIPTION --}}
+    <div class="detail-section mb-5 p-4 rounded-3" style="background: white; border: 1.5px solid var(--border); box-shadow: var(--shadow-card);">
+      <h3 class="detail-section-title mb-3">📝 Deskripsi</h3>
+      <p class="detail-desc mb-0" style="font-size: 15px; line-height: 1.7;">{{ $item->description }}</p>
     </div>
 
+    {{-- FACILITIES --}}
     @if($item->facilities && count($item->facilities) > 0)
-    <div class="detail-section">
-      <p class="detail-section-title">✨ Fasilitas</p>
-      <div class="facilities">
+    <div class="detail-section mb-5 p-4 rounded-3" style="background: white; border: 1.5px solid var(--border); box-shadow: var(--shadow-card);">
+      <h3 class="detail-section-title mb-3">✨ Fasilitas</h3>
+      <div class="row g-2">
         @foreach($item->facilities as $facility)
-          <div class="facility" style="background:linear-gradient(135deg,#dbeafe 0%,#bfdbfe 100%);color:#1e40af;border-radius:10px;padding:8px 10px;font-size:12px;font-weight:600;display:flex;align-items:center;gap:8px;">
-            <span>✓</span> {{ $facility }}
+          <div class="col-6 col-md-4">
+            <div class="p-3 rounded-3 text-center" style="background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%); color: #1e40af; font-size: 13px; font-weight: 600;">
+              ✓ {{ $facility }}
+            </div>
           </div>
         @endforeach
       </div>
     </div>
     @endif
 
+    {{-- BRT STOPS --}}
     @if($item->category === 'BRT' && $item->stops && count($item->stops) > 0)
-    <div class="detail-section">
-      <p class="detail-section-title">🚌 Halte BRT</p>
-      <div class="brt-stops">
+    <div class="detail-section mb-5 p-4 rounded-3" style="background: white; border: 1.5px solid var(--border); box-shadow: var(--shadow-card);">
+      <h3 class="detail-section-title mb-3">🚌 Halte BRT</h3>
+      <div style="border-left: 3px solid var(--primary); padding-left: 20px;">
         @foreach($item->stops as $stop)
-          <div class="brt-stop" style="position:relative;font-size:13px;padding:8px 0 8px 20px;color:#1e293b;">{{ $stop }}</div>
+          <p class="mb-2" style="font-size: 14px; color: var(--text); position: relative; padding-left: 10px;">
+            <span style="position: absolute; left: -26px; top: 2px; width: 12px; height: 12px; border-radius: 50%; background: var(--primary); border: 3px solid white;"></span>
+            {{ $stop }}
+          </p>
         @endforeach
       </div>
     </div>
     @endif
 
-    <div class="detail-section">
-      <p class="detail-section-title">ℹ️ Informasi</p>
-      <div class="info-row">
-        <div class="info-icon">📍</div>
-        <div style="flex:1;">
-          <div class="info-label">Alamat</div>
-          <div class="info-value">{{ $item->address }}</div>
+    {{-- INFORMATION --}}
+    <div class="detail-section mb-5 p-4 rounded-3" style="background: white; border: 1.5px solid var(--border); box-shadow: var(--shadow-card);">
+      <h3 class="detail-section-title mb-4">ℹ️ Informasi</h3>
+      
+      <div class="row g-3">
+        <div class="col-12">
+          <div class="d-flex gap-3 p-3 rounded-2" style="background: var(--primary-soft); border: 1px solid rgba(30,64,175,0.2);">
+            <div style="width: 40px; height: 40px; border-radius: 12px; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 18px;">📍</div>
+            <div>
+              <p style="font-size: 12px; font-weight: 700; text-transform: uppercase; color: var(--muted); margin: 0;">Alamat</p>
+              <p style="font-size: 14px; color: var(--text); margin: 4px 0 0 0; font-weight: 600;">{{ $item->address }}</p>
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="info-row">
-        <div class="info-icon">⏰</div>
-        <div style="flex:1;">
-          <div class="info-label">Jam Operasional</div>
-          <div class="info-value">{{ $item->hours }}</div>
+        
+        <div class="col-12">
+          <div class="d-flex gap-3 p-3 rounded-2" style="background: #fef3c7; border: 1px solid rgba(245,158,11,0.2);">
+            <div style="width: 40px; height: 40px; border-radius: 12px; background: var(--accent); color: white; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 18px;">⏰</div>
+            <div>
+              <p style="font-size: 12px; font-weight: 700; text-transform: uppercase; color: var(--muted); margin: 0;">Jam Operasional</p>
+              <p style="font-size: 14px; color: var(--text); margin: 4px 0 0 0; font-weight: 600;">{{ $item->hours }}</p>
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="info-row">
-        <div class="info-icon">📞</div>
-        <div style="flex:1;">
-          <div class="info-label">Kontak</div>
-          <div class="info-value" style="color:var(--primary);font-weight:600;">{{ $item->contact }}</div>
+        
+        <div class="col-12">
+          <div class="d-flex gap-3 p-3 rounded-2" style="background: #e0f2fe; border: 1px solid rgba(30,64,175,0.2);">
+            <div style="width: 40px; height: 40px; border-radius: 12px; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 18px;">📞</div>
+            <div>
+              <p style="font-size: 12px; font-weight: 700; text-transform: uppercase; color: var(--muted); margin: 0;">Kontak</p>
+              <p style="font-size: 14px; color: var(--primary); margin: 4px 0 0 0; font-weight: 700;">{{ $item->contact }}</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
+    {{-- LOCATION & ACTIONS --}}
     @if($item->maps_url || ($item->lat && $item->lng))
-    <div class="detail-section">
-      <p class="detail-section-title">🗺️ Lokasi</p>
-      <div class="map-preview" style="border-radius:14px;overflow:hidden;border:1.5px solid var(--border);background:var(--border);position:relative;height:240px;margin-bottom:12px;">
+    <div class="detail-section mb-5 p-4 rounded-3" style="background: white; border: 1.5px solid var(--border); box-shadow: var(--shadow-card);">
+      <h3 class="detail-section-title mb-4">🗺️ Lokasi</h3>
+      
+      <div class="map-preview mb-4" style="border-radius: 16px; overflow: hidden; border: 1.5px solid var(--border); height: 280px;">
         @if($item->maps_url)
           @if(strpos($item->maps_url, 'iframe') !== false)
             {!! $item->maps_url !!}
           @else
             <iframe 
               width="100%" 
-              height="240" 
-              style="border:0;border-radius:14px;" 
+              height="100%" 
+              style="border:0;" 
               loading="lazy" 
               allowfullscreen="" 
               src="https://www.google.com/maps/embed/v1/place?key={{ config('services.google_maps.key') }}&q={{ $item->lat }},{{ $item->lng }}&zoom=16">
@@ -88,23 +132,59 @@
         @elseif($item->lat && $item->lng)
           <iframe 
             width="100%" 
-            height="240" 
-            style="border:0;border-radius:14px;" 
+            height="100%" 
+            style="border:0;" 
             loading="lazy" 
             allowfullscreen="" 
             src="https://www.google.com/maps/embed/v1/place?key={{ config('services.google_maps.key') }}&q={{ $item->lat }},{{ $item->lng }}&zoom=16">
           </iframe>
         @endif
       </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-        <a class="btn-primary" href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $item->contact) }}?text=Halo,%20saya%20tertarik%20dengan%20{{ urlencode($item->name) }}" target="_blank" style="background:linear-gradient(135deg,#10b981 0%,#059669 100%);margin-top:0;display:flex;align-items:center;justify-content:center;gap:6px;font-size:15px;">
-          💬 Hubungi
-        </a>
-        <a class="btn-primary" href="https://maps.google.com/?q={{ $item->lat }},{{ $item->lng }}" target="_blank" style="background:linear-gradient(135deg,#f59e0b 0%,#d97706 100%);margin-top:0;display:flex;align-items:center;justify-content:center;gap:6px;font-size:15px;">
-          🧭 Rute
-        </a>
+      
+      <div class="row g-3">
+        <div class="col-6">
+          <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $item->contact) }}?text=Halo,%20saya%20tertarik%20dengan%20{{ urlencode($item->name) }}" 
+             target="_blank" 
+             class="btn w-100" 
+             style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; border: none; font-weight: 700; padding: 12px 16px; border-radius: 12px;">
+            💬 WhatsApp
+          </a>
+        </div>
+        <div class="col-6">
+          <a href="https://maps.google.com/?q={{ $item->lat }},{{ $item->lng }}" 
+             target="_blank" 
+             class="btn w-100" 
+             style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color: white; border: none; font-weight: 700; padding: 12px 16px; border-radius: 12px;">
+            🧭 Rute
+          </a>
+        </div>
       </div>
     </div>
     @endif
+
+    {{-- BACK BUTTON --}}
+    <div class="text-center mb-5">
+      <a href="{{ route('home') }}" class="btn btn-outline-primary rounded-pill px-4 py-2">
+        ← Kembali ke Beranda
+      </a>
+    </div>
+
   </div>
+</main>
+
+<style>
+.detail-section-title { 
+  font-size: 14px; 
+  font-weight: 700; 
+  text-transform: uppercase; 
+  letter-spacing: 0.08em; 
+  color: var(--muted); 
+}
+.detail-desc { 
+  font-size: 15px; 
+  line-height: 1.7;
+  color: var(--text);
+}
+</style>
+
 @endsection

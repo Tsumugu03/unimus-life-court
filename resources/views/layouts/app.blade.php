@@ -6,8 +6,9 @@
 <title>@yield('title', 'Unimus Life & Culinary Hub')</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" />
 <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
     --primary: #1e40af; --primary-dark: #1e3a8a;
     --primary-soft: #dbeafe; --accent: #f59e0b;
@@ -20,7 +21,14 @@
     --shadow-float: 0 8px 24px rgba(0,0,0,.10);
     --radius: 16px;
 }
-body { font-family: var(--font); background: var(--bg); color: var(--text); min-height: 100vh; -webkit-font-smoothing: antialiased; }
+* { font-family: var(--font) !important; }
+body { 
+    background: linear-gradient(135deg, #f8fafc 0%, #eff6ff 100%); 
+    color: var(--text); 
+    min-height: 100vh; 
+    -webkit-font-smoothing: antialiased; 
+    font-family: var(--font);
+}
 a { text-decoration: none; color: inherit; }
 button { font-family: var(--font); cursor: pointer; }
 input, select, textarea { font-family: var(--font); }
@@ -165,10 +173,87 @@ input, select, textarea { font-family: var(--font); }
 .alert { padding: 12px 16px; border-radius: 12px; font-size: 13px; font-weight: 600; margin-bottom: 16px; }
 .alert-success { background: #d1fae5; color: #065f46; border: 1.5px solid #a7f3d0; }
 .alert-error { background: #fee2e2; color: #991b1b; border: 1.5px solid #fecaca; }
+
+/* HEADER IMPROVEMENTS */
+.app-header { 
+    background: linear-gradient(135deg, #0052cc 0%, #1e40af 100%); 
+    color: white; 
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.header-nav { display: flex; align-items: center; justify-content: space-between; }
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 18px; }
+.brand-icon { width: 44px; height: 44px; border-radius: 14px; background: rgba(255,255,255,.2); display: flex; align-items: center; justify-content: center; font-size: 24px; }
+.nav-links { display: flex; gap: 16px; align-items: center; }
+.nav-link { color: rgba(255,255,255,.9); font-size: 14px; font-weight: 600; transition: all 0.3s ease; }
+.nav-link:hover { color: white; opacity: 1; }
+
+/* SMOOTH ANIMATIONS */
+.fade-in { animation: fadeIn 0.5s ease-in-out; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+/* IMPROVED CARDS */
+.item-card { 
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+    border: none; 
+    border-radius: 16px;
+    overflow: hidden;
+}
+.item-card:hover { 
+    transform: translateY(-8px); 
+    box-shadow: 0 16px 32px rgba(0,0,0,0.12);
+}
+.item-card img { transition: transform 0.5s ease; }
+.item-card:hover img { transform: scale(1.06); }
+
+/* RESPONSIVE CONTAINER */
+@media(max-width: 576px) {
+    .main { padding-bottom: 100px; }
+    .grid { grid-template-columns: 1fr; }
+}
+@media(min-width: 768px) {
+    .grid { grid-template-columns: repeat(2, 1fr); }
+    .admin-summary { grid-template-columns: repeat(4, 1fr); }
+}
+@media(min-width: 992px) {
+    .grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* FILTER SECTION */
+.filter-section { background: white; border-radius: 16px; padding: 16px; margin-bottom: 20px; box-shadow: var(--shadow-card); }
+.filter-title { font-size: 14px; font-weight: 700; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
+.filter-chips { display: flex; gap: 10px; flex-wrap: wrap; }
+.filter-btn { 
+    padding: 8px 16px; 
+    border-radius: 20px; 
+    border: 2px solid var(--border); 
+    background: white; 
+    color: var(--text); 
+    font-size: 13px; 
+    font-weight: 600;
+    transition: all 0.2s;
+    cursor: pointer;
+}
+.filter-btn:hover { border-color: var(--primary); color: var(--primary); }
+.filter-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+/* EMPTY STATE */
+.empty-state { 
+    text-align: center; 
+    padding: 60px 20px; 
+    color: var(--muted);
+}
+.empty-state-icon { font-size: 64px; margin-bottom: 16px; }
+
+/* BREADCRUMB */
+.breadcrumb-custom { background: transparent; padding: 0; margin-bottom: 16px; }
+.breadcrumb-item { color: var(--text-light); font-size: 13px; }
+.breadcrumb-item a { color: var(--primary); }
 </style>
 @stack('styles')
 </head>
 <body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 @yield('content')
 @stack('scripts')
 </body>

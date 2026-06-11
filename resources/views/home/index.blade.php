@@ -4,112 +4,173 @@
 @section('content')
 
 {{-- HEADER --}}
-<header class="app-header">
-  <div class="header-inner">
-    <a href="{{ route('home') }}" class="header-brand">
-      <div class="brand-icon">🎓</div>
-      <div class="brand-label">
-        <small>Unimus</small>
-        <strong>Life & Culinary</strong>
+<header class="app-header sticky-top">
+  <nav class="navbar navbar-expand-lg navbar-dark px-0">
+    <div class="container-fluid px-3 px-md-4">
+      <a href="{{ route('home') }}" class="navbar-brand brand d-flex align-items-center gap-2 text-white mb-0">
+        <div class="brand-icon">🎓</div>
+        <div>
+          <div style="font-size: 10px; opacity: 0.8; font-weight: 600;">UNIMUS</div>
+          <div style="font-size: 16px; font-weight: 800;">Life & Culinary</div>
+        </div>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <div class="ms-auto">
+          <a href="{{ route('admin.login') }}" class="btn btn-link text-white text-decoration-none" style="font-size: 18px;">🛡️ Admin</a>
+        </div>
       </div>
-    </a>
-    <a href="{{ route('admin.login') }}" class="header-admin-btn">🛡️</a>
-  </div>
-
-  <div class="search-inner">
-    <div class="search-hero">
-      <h1>Hidup hemat ala mahasiswa Unimus.</h1>
-      <p>Cari kuliner murah, kost harian, dan rute BRT Trans Semarang dalam satu tempat.</p>
     </div>
-    <form method="GET" action="{{ route('home') }}">
-      @if($activeCategory !== 'All')
-        <input type="hidden" name="category" value="{{ $activeCategory }}" />
-      @endif
-      @if($activePrice !== 'all')
-        <input type="hidden" name="price" value="{{ $activePrice }}" />
-      @endif
-      <div class="search-box">
-        <span class="search-icon">🔍</span>
-        <input type="text" name="q" value="{{ $q }}" placeholder="Cari makanan, kost, atau halte…" />
-        <button type="submit" class="search-btn">Cari</button>
+  </nav>
+
+  <div class="search-section py-4">
+    <div class="container-fluid px-3 px-md-4">
+      <div class="row align-items-center">
+        <div class="col-12">
+          <h1 class="text-white fw-bold mb-2" style="font-size: 32px;">Hidup Hemat ala Mahasiswa Unimus</h1>
+          <p class="text-white-50 mb-3" style="font-size: 15px;">Temukan kuliner murah, kost nyaman, dan rute BRT dalam satu aplikasi</p>
+          
+          <form method="GET" action="{{ route('home') }}" class="search-form">
+            @if($activeCategory !== 'All')
+              <input type="hidden" name="category" value="{{ $activeCategory }}" />
+            @endif
+            @if($activePrice !== 'all')
+              <input type="hidden" name="price" value="{{ $activePrice }}" />
+            @endif
+            <div class="input-group" style="border-radius: 16px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+              <span class="input-group-text bg-white border-0" style="font-size: 18px;">🔍</span>
+              <input type="text" name="q" value="{{ $q }}" placeholder="Cari makanan, kost, atau halte…" class="form-control form-control-lg border-0" style="font-size: 15px;">
+              <button type="submit" class="btn" style="background: #0052cc; color: white; border: none; font-weight: 700;">Cari</button>
+            </div>
+          </form>
+        </div>
       </div>
-    </form>
+    </div>
   </div>
 </header>
 
-<main class="main">
-  @php
-    $categories = [
-      'All'      => ['emoji' => '☰',  'label' => 'Semua'],
-      'Culinary' => ['emoji' => '🍜', 'label' => 'Kuliner'],
-      'Kost'     => ['emoji' => '🏠', 'label' => 'Kost'],
-      'BRT'      => ['emoji' => '🚌', 'label' => 'BRT'],
-    ];
-  @endphp
-
-  <div class="chip-row">
-    @foreach($categories as $key => $cat)
-      <a href="{{ route('home', array_merge(request()->except('category'), ['category' => $key])) }}" class="chip {{ $activeCategory === $key ? 'active' : '' }}">
-        {{ $cat['emoji'] }} {{ $cat['label'] }}
-      </a>
-    @endforeach
-  </div>
-
-  @php
-    $priceOptions = [
-      'all'  => 'Semua harga',
-      'low'  => '< 15rb',
-      'mid'  => '15-50rb',
-      'high' => '> 50-100rb',
-    ];
-  @endphp
-  <p class="section-label-price">Rentang harga</p>
-  <div class="price-row">
-    @foreach($priceOptions as $key => $label)
-      <a href="{{ route('home', array_merge(request()->except('price'), ['price' => $key])) }}" class="price-btn {{ $activePrice === $key ? 'active' : '' }}">
-        {{ $label }}
-      </a>
-    @endforeach
-  </div>
-
-  <div class="results-header">
-    <h2 class="results-title">Hasil pencarian</h2>
-    <span class="results-count">{{ $items->count() }} tempat</span>
-  </div>
-
-  @if($items->isEmpty())
-    <div class="empty">Tidak ada hasil. Coba kata kunci atau filter lain.</div>
-  @else
-    <div class="grid">
-      @foreach($items as $item)
-        <a href="{{ route('item.show', $item) }}" class="card">
-          <div class="card-img">
-            <img src="{{ $item->image_url }}" alt="{{ $item->name }}" loading="lazy" />
-            <span class="cat-badge {{ $item->category_badge_class }}">
-              @if($item->category === 'Culinary') 🍜
-              @elseif($item->category === 'Kost') 🏠
-              @else 🚌
-              @endif
-              {{ $item->category }}
-            </span>
-          </div>
-          <div class="card-body">
-            <p class="card-name">{{ $item->name }}</p>
-            <p class="card-desc">{{ $item->short_desc }}</p>
-            <p class="card-price">
-              {{ $item->price_formatted }}
-              <span>{{ $item->price_label }}</span>
-            </p>
-          </div>
-        </a>
-      @endforeach
+<main class="main py-4">
+  <div class="container-fluid px-3 px-md-4">
+    {{-- CATEGORY FILTER --}}
+    <div class="filter-section mb-4">
+      <p class="filter-title mb-3">Kategori</p>
+      <div class="filter-chips">
+        @php
+          $categories = [
+            'All'      => ['emoji' => '☰',  'label' => 'Semua'],
+            'Culinary' => ['emoji' => '🍜', 'label' => 'Kuliner'],
+            'Kost'     => ['emoji' => '🏠', 'label' => 'Kost'],
+            'BRT'      => ['emoji' => '🚌', 'label' => 'BRT'],
+          ];
+        @endphp
+        @foreach($categories as $key => $cat)
+          <a href="{{ route('home', array_merge(request()->except('category'), ['category' => $key])) }}" 
+             class="filter-btn {{ $activeCategory === $key ? 'active' : '' }}">
+            {{ $cat['emoji'] }} {{ $cat['label'] }}
+          </a>
+        @endforeach
+      </div>
     </div>
-  @endif
+
+    {{-- PRICE FILTER --}}
+    <div class="filter-section mb-4">
+      <p class="filter-title mb-3">Rentang Harga</p>
+      <div class="filter-chips">
+        @php
+          $priceOptions = [
+            'all'  => '💵 Semua Harga',
+            'low'  => '🟢 < 15rb',
+            'mid'  => '🟡 15-50rb',
+            'high' => '🔴 > 50rb',
+          ];
+        @endphp
+        @foreach($priceOptions as $key => $label)
+          <a href="{{ route('home', array_merge(request()->except('price'), ['price' => $key])) }}" 
+             class="filter-btn {{ $activePrice === $key ? 'active' : '' }}">
+            {{ $label }}
+          </a>
+        @endforeach
+      </div>
+    </div>
+
+    {{-- RESULTS HEADER --}}
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2 class="mb-0" style="font-size: 22px; font-weight: 800;">Hasil Pencarian</h2>
+      <span class="badge bg-primary" style="font-size: 14px; padding: 8px 16px;">{{ $items->count() }} tempat</span>
+    </div>
+
+    {{-- ITEMS GRID --}}
+    @if($items->isEmpty())
+      <div class="empty-state">
+        <div class="empty-state-icon">🔍</div>
+        <p style="font-size: 16px;">Tidak ada hasil yang ditemukan</p>
+        <p style="font-size: 14px; margin-top: 8px;">Coba ubah filter atau kata kunci pencarian</p>
+      </div>
+    @else
+      <div class="row g-3">
+        @foreach($items as $item)
+          <div class="col-12 col-sm-6 col-lg-4">
+            <a href="{{ route('item.show', $item) }}" class="text-decoration-none">
+              <div class="card item-card h-100" style="box-shadow: var(--shadow-card); border: 1.5px solid var(--border);">
+                <div class="position-relative overflow-hidden" style="aspect-ratio: 1/1;">
+                  <img src="{{ $item->image_url }}" alt="{{ $item->name }}" class="w-100 h-100" style="object-fit: cover; loading: lazy;">
+                  <span class="badge position-absolute top-2 start-2" style="background: rgba(30,64,175,.92); font-size: 11px; font-weight: 700; padding: 6px 12px;">
+                    @if($item->category === 'Culinary') 🍜
+                    @elseif($item->category === 'Kost') 🏠
+                    @else 🚌
+                    @endif
+                    {{ $item->category }}
+                  </span>
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title mb-2" style="font-size: 14px; font-weight: 700; line-height: 1.3; color: var(--text);">{{ $item->name }}</h5>
+                  <p class="card-text mb-2" style="font-size: 12px; color: var(--text-light); display: flex; align-items: center; gap: 4px;">
+                    📍 {{ $item->short_desc }}
+                  </p>
+                  <p style="font-size: 16px; font-weight: 800; color: var(--primary); margin: 0;">
+                    {{ $item->price_formatted }}
+                    <span style="font-size: 11px; font-weight: 500; color: var(--muted);">{{ $item->price_label }}</span>
+                  </p>
+                </div>
+              </div>
+            </a>
+          </div>
+        @endforeach
+      </div>
+    @endif
+  </div>
 </main>
 
-<nav class="bottom-nav">
-  <button class="nav-btn active" onclick="location.href='{{ route('home') }}'">🏠 Beranda</button>
-  <button class="nav-btn" onclick="location.href='{{ route('admin.login') }}'">🛡️ Admin</button>
+{{-- FLOATING BOTTOM NAV (Mobile) --}}
+<nav class="bottom-nav d-lg-none fixed-bottom">
+  <button class="nav-btn flex-grow-1" onclick="location.href='{{ route('home') }}'">🏠 Beranda</button>
+  <button class="nav-btn flex-grow-1" onclick="location.href='{{ route('admin.login') }}'">🛡️ Admin</button>
 </nav>
+
+<style>
+.bottom-nav { 
+  background: white; 
+  border-top: 1px solid var(--border); 
+  display: flex; 
+  z-index: 20;
+  box-shadow: 0 -2px 8px rgba(0,0,0,0.08);
+}
+.nav-btn { 
+  background: none; 
+  border: none; 
+  color: var(--muted); 
+  font-size: 12px; 
+  font-weight: 600;
+  padding: 12px 8px;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.nav-btn:hover { color: var(--primary); }
+</style>
 
 @endsection
