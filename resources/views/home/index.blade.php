@@ -25,12 +25,12 @@
     </div>
   </nav>
 
-  <div class="search-section py-4">
+  <div class="search-section py-2">
     <div class="container-fluid px-3 px-md-4">
       <div class="row align-items-center">
         <div class="col-12">
-          <h1 class="text-white fw-bold mb-2" style="font-size: 32px;">Hidup Hemat ala Mahasiswa Unimus</h1>
-          <p class="text-white-50 mb-3" style="font-size: 15px;">Temukan kuliner murah, kost nyaman, dan rute BRT dalam satu aplikasi</p>
+          <h1 class="text-white fw-bold mb-2" style="font-size: 22px;">Hidup Hemat ala Mahasiswa Unimus</h1>
+          <p class="text-white-50 mb-2" style="font-size: 13px;">Temukan kuliner murah, kost nyaman, dan rute BRT dalam satu aplikasi</p>
           
           <form method="GET" action="{{ route('home') }}" class="search-form">
             @if($activeCategory !== 'All')
@@ -39,12 +39,38 @@
             @if($activePrice !== 'all')
               <input type="hidden" name="price" value="{{ $activePrice }}" />
             @endif
-            <div class="input-group" style="border-radius: 16px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
-              <span class="input-group-text bg-white border-0" style="font-size: 18px;">🔍</span>
-              <input type="text" name="q" value="{{ $q }}" placeholder="Cari makanan, kost, atau halte…" class="form-control form-control-lg border-0" style="font-size: 15px;">
-              <button type="submit" class="btn" style="background: #0052cc; color: white; border: none; font-weight: 700;">Cari</button>
+            <div class="hero-search-row">
+              <div class="hero-search-input">
+                <span class="hero-search-icon">🔍</span>
+                <input type="text" name="q" value="{{ $q }}" placeholder="Cari makanan, kost, atau halte…" />
+              </div>
+              <button type="submit" class="hero-search-submit">Cari</button>
             </div>
           </form>
+          <p class="hero-intro-text mt-3">Temukan rekomendasi makan murah, kost nyaman, dan rute BRT praktis untuk kebutuhan sehari-hari mahasiswa Unimus.</p>
+          <div class="hero-feature-cards mt-4">
+            <div class="feature-card">
+              <div class="feature-card-icon">🍜</div>
+              <div>
+                <div class="feature-card-title">Kuliner hemat</div>
+                <div class="feature-card-text">Menu favorit mahasiswa di sekitar kampus dengan harga ramah kantong.</div>
+              </div>
+            </div>
+            <div class="feature-card">
+              <div class="feature-card-icon">🏠</div>
+              <div>
+                <div class="feature-card-title">Kost nyaman</div>
+                <div class="feature-card-text">Pilihan kost dekat kampus yang mudah diakses dan aman.</div>
+              </div>
+            </div>
+            <div class="feature-card">
+              <div class="feature-card-icon">🚌</div>
+              <div>
+                <div class="feature-card-title">Rute BRT</div>
+                <div class="feature-card-text">Panduan halte dan jalur tercepat untuk perjalanan sehari-hari.</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -53,8 +79,10 @@
 
 <main class="main py-4">
   <div class="container-fluid px-3 px-md-4">
-    {{-- CATEGORY FILTER --}}
-    <div class="filter-section mb-4">
+    {{-- FILTERS (kategori + harga) --}}
+    <div class="filters-grid mb-4">
+      {{-- CATEGORY FILTER --}}
+      <div class="filter-section">
       <p class="filter-title mb-3">Kategori</p>
       <div class="filter-chips">
         @php
@@ -72,12 +100,15 @@
           </a>
         @endforeach
       </div>
-    </div>
+      </div>
 
-    {{-- PRICE FILTER --}}
-    <div class="filter-section mb-4">
-      <p class="filter-title mb-3">Rentang Harga</p>
-      <div class="filter-chips">
+        {{-- PRICE FILTER --}}
+        <div class="filter-section">
+        <div class="filter-header">
+          <p class="filter-title mb-0">Rentang Harga</p>
+          <button type="button" class="toggle-btn" data-target="#price-filter-body" aria-expanded="false">Tampilkan</button>
+        </div>
+        <div id="price-filter-body" class="filter-chips collapsed">
         @php
           $priceOptions = [
             'all'  => '💵 Semua Harga',
@@ -93,7 +124,8 @@
           </a>
         @endforeach
       </div>
-    </div>
+      </div>
+      </div>
 
     {{-- RESULTS HEADER --}}
     <div class="d-flex justify-content-between align-items-center mb-4">
