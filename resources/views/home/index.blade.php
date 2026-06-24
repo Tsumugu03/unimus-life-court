@@ -48,29 +48,6 @@
             </div>
           </form>
           <p class="hero-intro-text mt-3">Temukan rekomendasi makan murah, kost nyaman, dan rute BRT praktis untuk kebutuhan sehari-hari mahasiswa Unimus.</p>
-          <div class="hero-feature-cards mt-4">
-            <div class="feature-card">
-              <div class="feature-card-icon">🍜</div>
-              <div>
-                <div class="feature-card-title">Kuliner hemat</div>
-                <div class="feature-card-text">Menu favorit mahasiswa di sekitar kampus dengan harga ramah kantong.</div>
-              </div>
-            </div>
-            <div class="feature-card">
-              <div class="feature-card-icon">🏠</div>
-              <div>
-                <div class="feature-card-title">Kost nyaman</div>
-                <div class="feature-card-text">Pilihan kost dekat kampus yang mudah diakses dan aman.</div>
-              </div>
-            </div>
-            <div class="feature-card">
-              <div class="feature-card-icon">🚌</div>
-              <div>
-                <div class="feature-card-title">Rute BRT</div>
-                <div class="feature-card-text">Panduan halte dan jalur tercepat untuk perjalanan sehari-hari.</div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
