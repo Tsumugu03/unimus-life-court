@@ -152,6 +152,8 @@ input, select, textarea { font-family: var(--font); }
 .btn-primary:hover { opacity: .95; }
 .btn-secondary { width: 100%; height: 46px; border-radius: 14px; background: #fff; color: var(--text); border: 1.5px solid var(--border); font-size: 14px; font-weight: 700; transition: all .15s ease; }
 .btn-secondary:hover { background: var(--primary-soft); border-color: rgba(30,64,175,.35); color: var(--primary); }
+.btn-danger-full { width: 100%; height: 46px; border-radius: 14px; background: var(--destructive); color: #fff; border: none; font-size: 14px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 12px; transition: opacity .15s ease; text-decoration: none; }
+.btn-danger-full:hover { opacity: .9; color: #fff; }
 .btn-danger { min-width: 120px; }
 .btn-logout { min-width: 140px; padding: 0 18px; height: 44px; border-radius: 14px; background: #fff; color: var(--destructive); border: 1.5px solid #fecaca; font-size: 13px; font-weight: 700; transition: all .15s ease; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
 .btn-logout:hover { background: #fee2e2; border-color: var(--destructive); }
@@ -180,7 +182,8 @@ input, select, textarea { font-family: var(--font); }
 .admin-card-meta { color: var(--text-light); font-size: 13px; line-height: 1.7; }
 .admin-card-desc { color: var(--text-light); font-size: 13px; line-height: 1.8; min-height: 56px; }
 .admin-card-actions { display: flex; gap: 12px; margin-top: auto; justify-content: flex-end; align-items: center; }
-.admin-card-actions .btn { min-width: 132px; }
+.admin-card-actions form { display: inline-flex; margin: 0; }
+.admin-card-actions .btn { min-width: 132px; height: 44px; display: inline-flex; align-items: center; justify-content: center; margin: 0 !important; }
 .form-card { background: var(--card); border: 1.5px solid var(--border); border-radius: 24px; box-shadow: var(--shadow-card); padding: 28px; }
 .form-grid { display: grid; grid-template-columns: 1fr; gap: 18px; }
 @media(min-width:720px) { .form-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }

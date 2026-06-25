@@ -75,10 +75,10 @@
                 </div>
                 <div class="admin-card-actions">
                   <a href="{{ route('admin.item.edit', $item) }}" class="btn btn-primary btn-sm rounded-pill">Edit</a>
-                  <form method="POST" action="{{ route('admin.item.destroy', $item) }}">
+                  <form method="POST" action="{{ route('admin.item.destroy', $item) }}" class="m-0">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="btn btn-danger btn-sm rounded-pill" style="min-width: 132px; height: 44px;" onclick="return confirm('Yakin ingin menghapus item ini?')">Hapus</button>
+                    <button type="submit" class="btn btn-danger btn-sm rounded-pill" onclick="return confirm('Yakin ingin menghapus item ini?')">Hapus</button>
                   </form>
                 </div>
               </div>

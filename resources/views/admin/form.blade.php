@@ -114,8 +114,8 @@
         </div>
 
         <div class="form-actions">
-          <button type="submit" class="btn-primary">{{ $item ? 'Simpan Perubahan' : 'Simpan Item' }}</button>
-          <a href="{{ route('admin.dashboard') }}" class="btn-secondary">Kembali</a>
+          <button type="submit" class="btn-primary" style="margin-top: 0;">{{ $item ? 'Simpan Perubahan' : 'Simpan Item' }}</button>
+          <a href="{{ route('admin.dashboard') }}" class="btn-danger-full" style="margin-top: 0;">Kembali</a>
         </div>
       </form>
     </section>
