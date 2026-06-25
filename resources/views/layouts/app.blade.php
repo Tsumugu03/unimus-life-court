@@ -152,6 +152,8 @@ input, select, textarea { font-family: var(--font); }
 .btn-primary:hover { opacity: .9; }
 .btn-secondary { width: 100%; height: 46px; border-radius: 14px; background: #fff; color: var(--text); border: 1.5px solid var(--border); font-size: 14px; font-weight: 700; transition: all .15s; }
 .btn-secondary:hover { background: var(--primary-soft); border-color: rgba(30,64,175,.35); color: var(--primary); }
+.btn-logout { width: auto; min-width: 100px; padding: 0 18px; height: 36px; border-radius: 14px; background: #fff; color: var(--destructive); border: 1.5px solid #fecaca; font-size: 13px; font-weight: 700; transition: all .15s; display: inline-flex; align-items: center; gap: 6px; }
+.btn-logout:hover { background: #fee2e2; border-color: var(--destructive); }
 .admin-panel { background: var(--card); border: 1.5px solid var(--border); border-radius: 24px; box-shadow: var(--shadow-card); padding: 24px; margin-top: 24px; }
 .admin-panel-hero { display: flex; gap: 18px; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; }
 .admin-panel-hero h1 { font-size: 28px; margin-bottom: 6px; }

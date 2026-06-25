@@ -8,8 +8,14 @@
         <div>
           <h1>Admin Dashboard</h1>
           <p>Kelola katalog item kuliner, kost, dan BRT dengan cepat dan nyaman dari satu panel.</p>
+          <a href="{{ route('admin.item.create') }}" class="btn btn-primary btn-sm mt-2">+ Tambah Item</a>
         </div>
-        <a href="{{ route('admin.item.create') }}" class="btn-primary btn-sm">Tambah Item</a>
+        <div>
+          <form method="POST" action="{{ route('admin.logout') }}">
+            @csrf
+            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin logout?')">🚪 Logout</button>
+          </form>
+        </div>
       </div>
 
       @if(session('success'))
