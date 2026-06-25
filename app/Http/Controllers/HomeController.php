@@ -25,8 +25,8 @@ class HomeController extends Controller
 
         match ($request->price ?? 'all') {
             'low'  => $query->where('price', '<', 25000),
-            'mid'  => $query->whereBetween('price', [25000, 500000]),
-            'high' => $query->where('price', '>', 500000),
+            'mid'  => $query->whereBetween('price', [25000, 50000]),
+            'high' => $query->where('price', '>', 50000),
             default => null,
         };
 

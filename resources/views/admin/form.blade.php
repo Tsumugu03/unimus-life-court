@@ -60,8 +60,9 @@
           </div>
 
           <div class="field-group">
-            <label class="field-label">Kontak</label>
+            <label class="field-label">Kontak (Optional)</label>
             <input type="text" name="contact" value="{{ old('contact', $item->contact ?? '') }}" class="field-input" />
+            <small style="display:block;margin-top:6px;color:var(--text-light);line-height:1.6;">Nomor kontak hanya diperlukan jika ingin menampilkan tombol WhatsApp pada detail item.</small>
           </div>
 
           <div class="field-group">
@@ -79,14 +80,7 @@
             <input type="text" name="lng" value="{{ old('lng', $item->lng ?? '') }}" class="field-input" />
           </div>
 
-          <div class="field-group span-2">
-            <label class="field-label">🗺️ Maps Embed Code (Optional)</label>
-            <textarea name="maps_url" class="field-input" placeholder="Paste iframe code dari Google Maps > Share > Embed a map (atau kosongkan untuk auto-generate)" style="font-family:monospace;font-size:11px;min-height:80px;">{{ old('maps_url', $item->maps_url ?? '') }}</textarea>
-            <small style="display:block;margin-top:6px;color:var(--text-light);line-height:1.6;">
-              📋 <strong>Cara:</strong> Buka Google Maps → Share → "Embed a map" → Copy kode yang dimulai dengan &lt;iframe&gt;<br/>
-              💡 Atau biarkan kosong agar sistem auto-generate dari koordinat lat/lng
-            </small>
-          </div>
+          {{-- maps_url field removed because the database schema does not currently include this column. --}}
 
           <div class="field-group">
             <label class="field-label">Instagram</label>

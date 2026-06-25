@@ -3,24 +3,36 @@
 
 @section('content')
   <main class="main admin-main">
+    @if(session('success'))
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    @endif
+    @if(session('error'))
+      <div class="alert alert-error alert-dismissible fade show" role="alert">
+        {{ session('error') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    @endif
     <section class="admin-panel">
-      <div class="admin-panel-hero">
-        <div>
+      <div class="admin-panel-top">
+        <div class="admin-panel-title">
           <h1>Admin Dashboard</h1>
           <p>Kelola katalog item kuliner, kost, dan BRT dengan cepat dan nyaman dari satu panel.</p>
-          <a href="{{ route('admin.item.create') }}" class="btn btn-primary btn-sm mt-2">+ Tambah Item</a>
         </div>
-        <div>
+        <div class="admin-panel-logout">
           <form method="POST" action="{{ route('admin.logout') }}">
             @csrf
-            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin logout?')">🚪 Logout</button>
+            <button type="submit" class="btn btn-logout" onclick="return confirm('Yakin ingin logout?')">
+              <i class="bi bi-box-arrow-right"></i> Logout
+            </button>
           </form>
         </div>
       </div>
-
-      @if(session('success'))
-        <div class="alert alert-success" style="margin-top:18px;">{{ session('success') }}</div>
-      @endif
+      <div class="admin-panel-actions">
+        <a href="{{ route('admin.item.create') }}" class="btn btn-primary btn-sm">+ Tambah Item</a>
+      </div>
 
       @php
         $counts = $items->groupBy('category')->map->count();
@@ -62,11 +74,11 @@
                   <p class="admin-card-desc">{{ $item->short_desc }}</p>
                 </div>
                 <div class="admin-card-actions">
-                  <a href="{{ route('admin.item.edit', $item) }}" class="btn-primary btn-sm">Edit</a>
+                  <a href="{{ route('admin.item.edit', $item) }}" class="btn btn-primary btn-sm rounded-pill">Edit</a>
                   <form method="POST" action="{{ route('admin.item.destroy', $item) }}">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="btn-secondary btn-sm">Hapus</button>
+                    <button type="submit" class="btn btn-danger btn-sm rounded-pill" style="min-width: 132px; height: 44px;" onclick="return confirm('Yakin ingin menghapus item ini?')">Hapus</button>
                   </form>
                 </div>
               </div>

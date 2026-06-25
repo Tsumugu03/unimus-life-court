@@ -82,11 +82,10 @@ class CatalogController extends Controller
             'short_desc'  => 'required|string|max:255',
             'description' => 'required|string',
             'hours'       => 'required|string|max:100',
-            'contact'     => 'required|string|max:100',
+            'contact'     => 'nullable|string|max:100',
             'address'     => 'required|string|max:255',
             'lat'         => 'required|numeric',
             'lng'         => 'required|numeric',
-            'maps_url'    => 'nullable|string|max:2000',
             'instagram'   => 'nullable|string|max:100',
             'tiktok'      => 'nullable|string|max:100',
             'route_code'  => 'nullable|string|max:10',
@@ -102,6 +101,9 @@ class CatalogController extends Controller
         $validated['stops'] = $request->category === 'BRT'
             ? array_filter(array_map('trim', explode("\n", $request->input('stops_text', ''))))
             : null;
+
+        // Jika kontak tidak diisi, simpan sebagai string kosong untuk menghindari NOT NULL error pada database lama
+        $validated['contact'] = $validated['contact'] ?? '';
 
         return $validated;
     }

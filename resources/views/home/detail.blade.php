@@ -76,6 +76,19 @@
     {{-- INFORMATION --}}
     <div class="detail-section mb-5 p-4 rounded-3" style="background: white; border: 1.5px solid var(--border); box-shadow: var(--shadow-card);">
       <h3 class="detail-section-title mb-4">ℹ️ Informasi</h3>
+
+      @php
+        $instagramUrl = null;
+        $tiktokUrl = null;
+        if ($item->instagram) {
+            $insta = trim($item->instagram);
+            $instagramUrl = preg_match('/^https?:\/\//', $insta) ? $insta : 'https://instagram.com/'.ltrim($insta, '@');
+        }
+        if ($item->tiktok) {
+            $tiktok = trim($item->tiktok);
+            $tiktokUrl = preg_match('/^https?:\/\//', $tiktok) ? $tiktok : 'https://www.tiktok.com/@'.ltrim($tiktok, '@');
+        }
+      @endphp
       
       <div class="row g-3">
         <div class="col-12">
@@ -107,41 +120,41 @@
             </div>
           </div>
         </div>
+
+        @if($instagramUrl || $tiktokUrl)
+        <div class="col-12">
+          <div class="p-3 rounded-2" style="background: #f8fafc; border: 1.5px solid rgba(226,232,240,0.8);">
+            <p style="font-size: 12px; font-weight: 700; text-transform: uppercase; color: var(--muted); margin: 0 0 12px 0;">Sosial Media</p>
+            <div class="d-flex flex-wrap gap-2">
+              @if($instagramUrl)
+                <a href="{{ $instagramUrl }}" target="_blank" rel="noopener noreferrer" class="btn btn-outline-dark btn-sm rounded-pill" style="min-width: 120px; display: inline-flex; align-items: center; justify-content: center; gap: 6px;">
+                  📷 Instagram
+                </a>
+              @endif
+              @if($tiktokUrl)
+                <a href="{{ $tiktokUrl }}" target="_blank" rel="noopener noreferrer" class="btn btn-outline-dark btn-sm rounded-pill" style="min-width: 120px; display: inline-flex; align-items: center; justify-content: center; gap: 6px;">
+                  🎵 TikTok
+                </a>
+              @endif
+            </div>
+          </div>
+        </div>
+        @endif
       </div>
     </div>
 
     {{-- LOCATION & ACTIONS --}}
-    @if($item->maps_url || ($item->lat && $item->lng))
+    @if($item->lat && $item->lng)
     <div class="detail-section mb-5 p-4 rounded-3" style="background: white; border: 1.5px solid var(--border); box-shadow: var(--shadow-card);">
       <h3 class="detail-section-title mb-4">🗺️ Lokasi</h3>
-      
-      <div class="map-preview mb-4" style="border-radius: 16px; overflow: hidden; border: 1.5px solid var(--border); height: 280px;">
-        @if($item->maps_url)
-          @if(strpos($item->maps_url, 'iframe') !== false)
-            {!! $item->maps_url !!}
-          @else
-            <iframe 
-              width="100%" 
-              height="100%" 
-              style="border:0;" 
-              loading="lazy" 
-              allowfullscreen="" 
-              src="https://www.google.com/maps/embed/v1/place?key={{ config('services.google_maps.key') }}&q={{ $item->lat }},{{ $item->lng }}&zoom=16">
-            </iframe>
-          @endif
-        @elseif($item->lat && $item->lng)
-          <iframe 
-            width="100%" 
-            height="100%" 
-            style="border:0;" 
-            loading="lazy" 
-            allowfullscreen="" 
-            src="https://www.google.com/maps/embed/v1/place?key={{ config('services.google_maps.key') }}&q={{ $item->lat }},{{ $item->lng }}&zoom=16">
-          </iframe>
-        @endif
+
+      <div class="mb-4 p-4 rounded-3" style="background: #f8fafc; border: 1.5px solid var(--border);">
+        <p style="font-size: 14px; font-weight: 700; margin: 0 0 6px 0; color: var(--muted);">Alamat</p>
+        <p style="font-size: 15px; margin: 0; color: var(--text);">{{ $item->address }}</p>
       </div>
-      
+
       <div class="row g-3">
+        @if($item->contact)
         <div class="col-6">
           <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $item->contact) }}?text=Halo,%20saya%20tertarik%20dengan%20{{ urlencode($item->name) }}" 
              target="_blank" 
@@ -150,13 +163,23 @@
             💬 WhatsApp
           </a>
         </div>
+        @endif
         <div class="col-6">
+          @if($item->category === 'BRT')
+          <a href="https://www.google.com/maps/dir/?api=1&origin=UNIMUS+Semarang&destination={{ $item->lat }},{{ $item->lng }}&travelmode=transit" 
+             target="_blank" 
+             class="btn w-100" 
+             style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color: white; border: none; font-weight: 700; padding: 12px 16px; border-radius: 12px;">
+            🚏 Rute dari UNIMUS
+          </a>
+          @else
           <a href="https://maps.google.com/?q={{ $item->lat }},{{ $item->lng }}" 
              target="_blank" 
              class="btn w-100" 
              style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color: white; border: none; font-weight: 700; padding: 12px 16px; border-radius: 12px;">
-            🧭 Rute
+            🧭 Buka Google Maps
           </a>
+          @endif
         </div>
       </div>
     </div>
