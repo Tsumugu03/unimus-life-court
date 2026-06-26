@@ -70,51 +70,83 @@
   <div class="container px-3 px-md-4">
     
     {{-- CATEGORY FILTER --}}
-    <div class="category-section mb-4">
-      <div class="d-flex align-items-center gap-3 flex-wrap">
-        @php
-          $categories = [
-            'All'      => ['icon' => '☰',  'label' => 'Semua'],
-            'Culinary' => ['icon' => '🍜', 'label' => 'Kuliner'],
-            'Kost'     => ['icon' => '🏠', 'label' => 'Kost'],
-            'BRT'      => ['icon' => '🚌', 'label' => 'BRT'],
-          ];
-        @endphp
-        @foreach($categories as $key => $cat)
-          <a href="{{ route('home', array_merge(request()->except('category'), ['category' => $key])) }}" 
-             class="category-btn {{ $activeCategory === $key ? 'active' : '' }}">
-            <span class="me-1">{{ $cat['icon'] }}</span>
-            {{ $cat['label'] }}
-          </a>
-        @endforeach
-        
-        <div class="ms-auto d-none d-md-block">
-          <div class="price-filter dropdown">
-            <button class="btn btn-outline-secondary btn-sm rounded-pill dropdown-toggle" type="button" data-bs-toggle="dropdown">
-              💵 Harga
-            </button>
-            <ul class="dropdown-menu dropdown-menu-end">
-              @php
-                $priceOptions = [
-                  'all'  => 'Semua Harga',
-                  'low'  => '< 15rb',
-                  'mid'  => '15-50rb',
-                  'high' => '> 50rb',
-                ];
-              @endphp
-              @foreach($priceOptions as $key => $label)
-                <li>
-                  <a class="dropdown-item {{ $activePrice === $key ? 'active' : '' }}" 
-                     href="{{ route('home', array_merge(request()->except('price'), ['price' => $key])) }}">
-                    {{ $label }}
-                  </a>
-                </li>
-              @endforeach
-            </ul>
-          </div>
+<div class="filter-section mb-4">
+  <div class="filter-header">
+    <h3 class="filter-title mb-0">Filter</h3>
+    <button type="button" class="toggle-btn" data-bs-toggle="collapse" data-bs-target="#filterCollapse" aria-expanded="true" aria-controls="filterCollapse">
+      Sembunyikan
+    </button>
+  </div>
+  <div class="collapse show" id="filterCollapse">
+    <div class="d-flex align-items-center gap-3 flex-wrap mt-3">
+      @php
+        $categories = [
+          'All'      => ['icon' => '☰',  'label' => 'Semua'],
+          'Culinary' => ['icon' => '🍜', 'label' => 'Kuliner'],
+          'Kost'     => ['icon' => '🏠', 'label' => 'Kost'],
+          'BRT'      => ['icon' => '🚌', 'label' => 'BRT'],
+        ];
+      @endphp
+      @foreach($categories as $key => $cat)
+        <a href="{{ route('home', array_merge(request()->except('category'), ['category' => $key])) }}" 
+           class="filter-btn {{ $activeCategory === $key ? 'active' : '' }}">
+          <span class="me-1">{{ $cat['icon'] }}</span>
+          {{ $cat['label'] }}
+        </a>
+      @endforeach
+      
+      <div class="ms-auto d-none d-md-block">
+        <div class="price-filter dropdown">
+          <button class="btn btn-outline-secondary btn-sm rounded-pill dropdown-toggle" type="button" data-bs-toggle="dropdown">
+            💵 Harga
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            @php
+              $priceOptions = [
+                'all'  => 'Semua Harga',
+                'low'  => '< 15rb',
+                'mid'  => '15-50rb',
+                'high' => '> 50rb',
+              ];
+            @endphp
+            @foreach($priceOptions as $key => $label)
+              <li>
+                <a class="dropdown-item {{ $activePrice === $key ? 'active' : '' }}" 
+                   href="{{ route('home', array_merge(request()->except('price'), ['price' => $key])) }}">
+                  {{ $label }}
+                </a>
+              </li>
+            @endforeach
+          </ul>
         </div>
       </div>
     </div>
+
+    {{-- Filter Reset and Sort --}}
+    <div class="d-flex align-items-center gap-2 mt-3">
+      {{-- Reset Filter Button --}}
+      @if($q || $activeCategory !== 'All' || $activePrice !== 'all')
+        <a href="{{ route('home', ['q' => null, 'category' => 'All', 'price' => 'all']) }}" class="btn btn-sm btn-outline-secondary rounded-pill d-flex align-items-center gap-1">
+          ✕ Reset Filter
+        </a>
+      @endif
+
+      {{-- Sort Dropdown --}}
+      <div class="dropdown ms-auto">
+        <button class="btn btn-sm btn-outline-secondary rounded-pill dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          ⇅ Urutkan: {{ ['latest' => 'Terbaru', 'price_asc' => 'Harga Termurah', 'price_desc' => 'Harga Termahal', 'name_asc' => 'Nama A-Z'][request()->sort ?? 'latest'] }}
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li><a class="dropdown-item {{ (request()->sort ?? 'latest') === 'latest' ? 'active' : '' }}" href="{{ route('home', array_merge(request()->except('sort'), ['sort' => 'latest'])) }}">Terbaru</a></li>
+          <li><a class="dropdown-item {{ request()->sort === 'price_asc' ? 'active' : '' }}" href="{{ route('home', array_merge(request()->except('sort'), ['sort' => 'price_asc'])) }}">Harga Termurah</a></li>
+          <li><a class="dropdown-item {{ request()->sort === 'price_desc' ? 'active' : '' }}" href="{{ route('home', array_merge(request()->except('sort'), ['sort' => 'price_desc'])) }}">Harga Termahal</a></li>
+          <li><a class="dropdown-item {{ request()->sort === 'name_asc' ? 'active' : '' }}" href="{{ route('home', array_merge(request()->except('sort'), ['sort' => 'name_asc'])) }}">Nama A-Z</a></li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
 
     {{-- RESULTS HEADER --}}
     @if($q || $activeCategory !== 'All' || $activePrice !== 'all')
