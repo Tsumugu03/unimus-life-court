@@ -28,6 +28,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/item/{item}/edit',    [CatalogController::class, 'edit'])->name('item.edit');
         Route::put('/item/{item}',         [CatalogController::class, 'update'])->name('item.update');
         Route::delete('/item/{item}',      [CatalogController::class, 'destroy'])->name('item.destroy');
+        Route::get('/item/{item}/preview', [CatalogController::class, 'preview'])->name('item.preview');
+        Route::get('/item/{item}/duplicate', [CatalogController::class, 'duplicate'])->name('item.duplicate');
 
     });
 });

@@ -10,10 +10,23 @@ use Illuminate\Support\Str;
 class CatalogController extends Controller
 {
     // Dashboard: list semua item
-    public function index()
+    public function index(Request $request)
     {
-        $items = CatalogItem::latest()->get();
-        return view('admin.dashboard', compact('items'));
+        $category = $request->query('category');
+        
+        // Get filtered items for display
+        $query = CatalogItem::latest();
+        if ($category && in_array($category, ['Culinary', 'Kost', 'BRT'])) {
+            $query->where('category', $category);
+        }
+        $items = $query->get();
+        
+        // Get all items for category counts in dropdown (regardless of current filter)
+        $allItems = CatalogItem::latest()->get();
+        $counts = $allItems->groupBy('category')->map->count();
+        $totalCount = $allItems->count();
+        
+        return view('admin.dashboard', compact('items', 'category', 'counts', 'totalCount'));
     }
 
     // Form tambah baru
@@ -121,5 +134,17 @@ class CatalogController extends Controller
         $file->move(public_path('uploads'), $filename);
 
         return $filename;
+    }
+
+    // Preview item di halaman publik
+    public function preview(CatalogItem $item)
+    {
+        return redirect()->route('item.show', $item)->target('_blank');
+    }
+
+    // Duplikat item ke form baru
+    public function duplicate(CatalogItem $item)
+    {
+        return view('admin.form', ['item' => null, 'duplicate_from' => $item]);
     }
 }
