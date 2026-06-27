@@ -30,26 +30,25 @@
           </form>
         </div>
       </div>
-      <div class="admin-panel-actions">
+      <div class="admin-actions-and-filter" style="margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center;">
         <a href="{{ route('admin.item.create') }}" class="btn btn-primary btn-sm">+ Tambah Item</a>
-      </div>
-
-      <!-- Filter Kategori dengan Dropdown -->
-      <div class="admin-filter" style="margin-bottom: 24px; display: flex; gap: 12px; align-items: center;">
-        <div class="dropdown">
-          <button class="btn btn-outline-secondary btn-sm rounded-pill d-flex align-items-center gap-2" type="button" id="categoryFilter" data-bs-toggle="dropdown">
-            <span>🔽 Filter Kategori</span>
-            <span style="font-size: 12px; background: var(--primary); color: white; padding: 2px 8px; border-radius: 12px; min-width: 20px; text-align: center;">
-              {{ $items->count() }}
-            </span>
-          </button>
-          <ul class="dropdown-menu" aria-labelledby="categoryFilter">
-            <li><a class="dropdown-item {{ !$category ? 'active' : '' }}" href="{{ route('admin.dashboard') }}">📋 Semua ({{ $items->count() }})</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item {{ $category === 'Culinary' ? 'active' : '' }}" href="{{ route('admin.dashboard', ['category' => 'Culinary']) }}">🍜 Culinary ({{ $counts->get('Culinary', 0) }})</a></li>
-            <li><a class="dropdown-item {{ $category === 'Kost' ? 'active' : '' }}" href="{{ route('admin.dashboard', ['category' => 'Kost']) }}">🏠 Kost ({{ $counts->get('Kost', 0) }})</a></li>
-            <li><a class="dropdown-item {{ $category === 'BRT' ? 'active' : '' }}" href="{{ route('admin.dashboard', ['category' => 'BRT']) }}">🚌 BRT ({{ $counts->get('BRT', 0) }})</a></li>
-          </ul>
+        <!-- Filter Kategori dengan Dropdown -->
+        <div class="admin-filter" style="display: flex; gap: 12px; align-items: center;">
+          <div class="dropdown">
+            <button class="btn btn-outline-secondary btn-sm rounded-pill d-flex align-items-center gap-2" type="button" id="categoryFilter" data-bs-toggle="dropdown">
+              <span>🔽 Filter Kategori</span>
+              <span style="font-size: 12px; background: var(--primary); color: white; padding: 2px 8px; border-radius: 12px; min-width: 20px; text-align: center;">
+                {{ $items->count() }}
+              </span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="categoryFilter">
+              <li><a class="dropdown-item {{ !$category ? 'active' : '' }}" href="{{ route('admin.dashboard') }}">📋 Semua ({{ $items->count() }})</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item {{ $category === 'Culinary' ? 'active' : '' }}" href="{{ route('admin.dashboard', ['category' => 'Culinary']) }}">🍜 Culinary ({{ $counts->get('Culinary', 0) }})</a></li>
+              <li><a class="dropdown-item {{ $category === 'Kost' ? 'active' : '' }}" href="{{ route('admin.dashboard', ['category' => 'Kost']) }}">🏠 Kost ({{ $counts->get('Kost', 0) }})</a></li>
+              <li><a class="dropdown-item {{ $category === 'BRT' ? 'active' : '' }}" href="{{ route('admin.dashboard', ['category' => 'BRT']) }}">🚌 BRT ({{ $counts->get('BRT', 0) }})</a></li>
+            </ul>
+          </div>
         </div>
       </div>
 
