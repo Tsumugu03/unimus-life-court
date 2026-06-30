@@ -50,6 +50,29 @@ input, select, textarea { font-family: var(--font); }
 .header-subtitle { font-size: 13px; opacity: .88; margin: 10px 0 0; }
 .header-admin-btn { font-size: 20px; background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.25); color: #fff; width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; cursor: pointer; transition: all .15s; text-decoration: none; }
 .header-admin-btn:hover { background: rgba(255,255,255,.25); }
+/* Subtle hide for Admin button: keep link present and keyboard-focusable,
+   but make it unobtrusive. Visible again on hover or keyboard focus. */
+a[href$="/admin/login"], a[href$="/admin/login/"] {
+    opacity: 0.06;
+    color: transparent !important;
+    background: transparent !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+    width: 32px;
+    height: 32px;
+    padding: 4px 6px;
+    border-radius: 8px;
+    display: inline-grid;
+    place-items: center;
+    transition: opacity .12s ease, background .12s ease, color .12s ease;
+}
+a[href$="/admin/login"]:hover, a[href$="/admin/login"]:focus,
+a[href$="/admin/login/"]:hover, a[href$="/admin/login/"]:focus {
+    opacity: 1;
+    color: inherit !important;
+    background: rgba(255,255,255,.12) !important;
+    border-color: rgba(255,255,255,.18) !important;
+}
 .search-inner { max-width: 440px; margin: 0 auto; padding: 0 16px 32px; }
 .search-hero { margin-bottom: 6px; }
 .search-hero h1 { font-size: 20px; font-weight: 800; line-height: 1.15; color: #fff; margin-bottom: 4px; }
