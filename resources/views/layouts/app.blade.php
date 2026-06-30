@@ -8,6 +8,13 @@
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" />
+@if(request()->routeIs('admin.*'))
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5' fill='%231e40af'/%3E%3Cpath fill='%23fff' d='M16 10h-1V8a3 3 0 0 0-6 0v2H8a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-7a1 1 0 0 0-1-1Zm-5 5.5a1.5 1.5 0 1 1 3 0V16h-3v-.5Zm3-5.5H10V8a2 2 0 1 1 4 0v2Z'/%3E%3C/svg%3E" type="image/svg+xml" />
+    <link rel="shortcut icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5' fill='%231e40af'/%3E%3Cpath fill='%23fff' d='M16 10h-1V8a3 3 0 0 0-6 0v2H8a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-7a1 1 0 0 0-1-1Zm-5 5.5a1.5 1.5 0 1 1 3 0V16h-3v-.5Zm3-5.5H10V8a2 2 0 1 1 4 0v2Z'/%3E%3C/svg%3E" type="image/svg+xml" />
+@else
+    <link rel="icon" href="https://i.ibb.co/C0W2W6f/unimus-life-culinary-logo.png?v=2" type="image/png" />
+    <link rel="shortcut icon" href="https://i.ibb.co/C0W2W6f/unimus-life-culinary-logo.png?v=2" type="image/png" />
+@endif
 <style>
 :root {
     --primary: #1e40af; --primary-dark: #1e3a8a;
@@ -271,7 +278,6 @@ input, select, textarea { font-family: var(--font); }
 .filter-header { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
 .toggle-btn { background: transparent; border: 1px solid var(--border); padding: 6px 10px; border-radius: 10px; font-size: 13px; color: var(--primary); cursor: pointer; }
 .toggle-btn:hover { background: var(--primary-soft); }
-.collapsed { display: none !important; }
 .filter-btn:hover { border-color: var(--primary); color: var(--primary); }
 .filter-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
 
@@ -295,22 +301,29 @@ input, select, textarea { font-family: var(--font); }
 @yield('content')
 @stack('scripts')
 <script>
-document.addEventListener('click', function(e){
-    if(e.target && e.target.matches('.toggle-btn')){
-        var btn = e.target;
-        var sel = btn.getAttribute('data-target');
-        var target = document.querySelector(sel);
-        if(!target) return;
-        var isCollapsed = target.classList.toggle('collapsed');
-        if(isCollapsed){
-            btn.textContent = 'Tampilkan';
-            btn.setAttribute('aria-expanded','false');
-        } else {
-            btn.textContent = 'Sembunyikan';
+(function(){
+    var target = document.querySelector('#filterCollapse');
+    var btn = document.querySelector('.toggle-btn[data-bs-target="#filterCollapse"]');
+
+    function updateToggleButton(expanded){
+        if(!btn) return;
+        if(expanded){
+            btn.textContent = '∧';
             btn.setAttribute('aria-expanded','true');
+        } else {
+            btn.textContent = '∨';
+            btn.setAttribute('aria-expanded','false');
         }
     }
-});
+
+    if(target){
+        target.addEventListener('show.bs.collapse', function(){ updateToggleButton(true); });
+        target.addEventListener('hide.bs.collapse', function(){ updateToggleButton(false); });
+
+        // in case the collapse starts in a hidden state
+        updateToggleButton(target.classList.contains('show'));
+    }
+})();
 </script>
 </body>
 </html>

@@ -74,7 +74,7 @@
   <div class="filter-header">
     <h3 class="filter-title mb-0">Filter</h3>
     <button type="button" class="toggle-btn" data-bs-toggle="collapse" data-bs-target="#filterCollapse" aria-expanded="true" aria-controls="filterCollapse">
-      Sembunyikan
+      ∧
     </button>
   </div>
   <div class="collapse show" id="filterCollapse">
