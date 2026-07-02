@@ -1,13 +1,13 @@
-@extends('layouts.app')
-@section('title', 'Unimus Life & Culinary Hub')
+@extends("layouts.app")
+@section("title", "Unimus Life & Culinary Hub")
 
-@section('content')
+@section("content")
 
 {{-- HEADER --}}
 <header class="app-header sticky-top">
   <nav class="navbar navbar-expand-lg navbar-dark px-0">
     <div class="container px-3 px-md-4">
-      <a href="{{ route('home') }}" class="navbar-brand d-flex align-items-center gap-2 text-white mb-0">
+      <a href="{{ route("home") }}" class="navbar-brand d-flex align-items-center gap-2 text-white mb-0">
         <div class="brand-icon">🎓</div>
         <div>
           <div style="font-size: 10px; opacity: 0.8; font-weight: 600; letter-spacing: 1px;">UNIMUS</div>
@@ -19,7 +19,7 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <div class="ms-auto">
-          <a href="{{ route('admin.login') }}" class="btn btn-outline-light btn-sm rounded-pill px-3">
+          <a href="{{ route("admin.login") }}" class="btn btn-outline-light btn-sm rounded-pill px-3 d-none d-xl-inline-block">
             <span class="me-1">🛡️</span> Admin
           </a>
         </div>
@@ -36,11 +36,11 @@
         <h1 class="hero-title mb-3">Hidup Hemat<br><span class="text-warning">ala Mahasiswa Unimus</span></h1>
         <p class="hero-subtitle mb-4">Temukan kuliner murah, kost nyaman, dan rute BRT dalam satu platform.</p>
         
-        <form method="GET" action="{{ route('home') }}" class="search-form">
-          @if($activeCategory !== 'All')
+        <form method="GET" action="{{ route("home") }}" class="search-form">
+          @if($activeCategory !== "All")
             <input type="hidden" name="category" value="{{ $activeCategory }}" />
           @endif
-          @if($activePrice !== 'all')
+          @if($activePrice !== "all")
             <input type="hidden" name="price" value="{{ $activePrice }}" />
           @endif
           <div class="search-box">
@@ -73,7 +73,7 @@
 <div class="filter-section mb-4">
   <div class="filter-header">
     <h3 class="filter-title mb-0">Filter</h3>
-    <button type="button" class="toggle-btn" data-bs-toggle="collapse" data-bs-target="#filterCollapse" aria-expanded="true" aria-controls="filterCollapse">
+    <button type="button" data-bs-toggle="collapse" data-bs-target="#filterCollapse" aria-expanded="true" aria-controls="filterCollapse">
       ∧
     </button>
   </div>
@@ -81,17 +81,17 @@
     <div class="d-flex align-items-center gap-3 flex-wrap mt-3">
       @php
         $categories = [
-          'All'      => ['icon' => '☰',  'label' => 'Semua'],
-          'Culinary' => ['icon' => '🍜', 'label' => 'Kuliner'],
-          'Kost'     => ['icon' => '🏠', 'label' => 'Kost'],
-          'BRT'      => ['icon' => '🚌', 'label' => 'BRT'],
+          "All"      => ["icon" => "☰",  "label" => "Semua"],
+          "Culinary" => ["icon" => "🍜", "label" => "Kuliner"],
+          "Kost"     => ["icon" => "🏠", "label" => "Kost"],
+          "BRT"      => ["icon" => "🚌", "label" => "BRT"],
         ];
       @endphp
       @foreach($categories as $key => $cat)
-        <a href="{{ route('home', array_merge(request()->except('category'), ['category' => $key])) }}" 
-           class="filter-btn {{ $activeCategory === $key ? 'active' : '' }}">
-          <span class="me-1">{{ $cat['icon'] }}</span>
-          {{ $cat['label'] }}
+        <a href="{{ route("home", array_merge(request()->except("category"), ["category" => $key])) }}" 
+           class="filter-btn {{ $activeCategory === $key ? "active" : "" }}">
+          <span class="me-1">{{ $cat["icon"] }}</span>
+          {{ $cat["label"] }}
         </a>
       @endforeach
       
@@ -103,16 +103,16 @@
           <ul class="dropdown-menu dropdown-menu-end">
             @php
               $priceOptions = [
-                'all'  => 'Semua Harga',
-                'low'  => '< 15rb',
-                'mid'  => '15-50rb',
-                'high' => '> 50rb',
+                "all"  => "Semua Harga",
+                "low"  => "< 15rb",
+                "mid"  => "15-50rb",
+                "high" => "> 50rb",
               ];
             @endphp
             @foreach($priceOptions as $key => $label)
               <li>
-                <a class="dropdown-item {{ $activePrice === $key ? 'active' : '' }}" 
-                   href="{{ route('home', array_merge(request()->except('price'), ['price' => $key])) }}">
+                <a class="dropdown-item {{ $activePrice === $key ? "active" : "" }}" 
+                   href="{{ route("home", array_merge(request()->except("price"), ["price" => $key])) }}">
                   {{ $label }}
                 </a>
               </li>
@@ -125,8 +125,8 @@
     {{-- Filter Reset and Sort --}}
     <div class="d-flex align-items-center gap-2 mt-3">
       {{-- Reset Filter Button --}}
-      @if($q || $activeCategory !== 'All' || $activePrice !== 'all')
-        <a href="{{ route('home', ['q' => null, 'category' => 'All', 'price' => 'all']) }}" class="btn btn-sm btn-outline-secondary rounded-pill d-flex align-items-center gap-1">
+      @if($q || $activeCategory !== "All" || $activePrice !== "all")
+        <a href="{{ route("home", ["q" => null, "category" => "All", "price" => "all"]) }}" class="btn btn-sm btn-outline-secondary rounded-pill d-flex align-items-center gap-1">
           ✕ Reset Filter
         </a>
       @endif
@@ -134,13 +134,13 @@
       {{-- Sort Dropdown --}}
       <div class="dropdown ms-auto">
         <button class="btn btn-sm btn-outline-secondary rounded-pill dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-          ⇅ Urutkan: {{ ['latest' => 'Terbaru', 'price_asc' => 'Harga Termurah', 'price_desc' => 'Harga Termahal', 'name_asc' => 'Nama A-Z'][request()->sort ?? 'latest'] }}
+          ⇅ Urutkan: {{ ["latest" => "Terbaru", "price_asc" => "Harga Termurah", "price_desc" => "Harga Termahal", "name_asc" => "Nama A-Z"][request()->sort ?? "latest"] }}
         </button>
         <ul class="dropdown-menu dropdown-menu-end">
-          <li><a class="dropdown-item {{ (request()->sort ?? 'latest') === 'latest' ? 'active' : '' }}" href="{{ route('home', array_merge(request()->except('sort'), ['sort' => 'latest'])) }}">Terbaru</a></li>
-          <li><a class="dropdown-item {{ request()->sort === 'price_asc' ? 'active' : '' }}" href="{{ route('home', array_merge(request()->except('sort'), ['sort' => 'price_asc'])) }}">Harga Termurah</a></li>
-          <li><a class="dropdown-item {{ request()->sort === 'price_desc' ? 'active' : '' }}" href="{{ route('home', array_merge(request()->except('sort'), ['sort' => 'price_desc'])) }}">Harga Termahal</a></li>
-          <li><a class="dropdown-item {{ request()->sort === 'name_asc' ? 'active' : '' }}" href="{{ route('home', array_merge(request()->except('sort'), ['sort' => 'name_asc'])) }}">Nama A-Z</a></li>
+          <li><a class="dropdown-item {{ (request()->sort ?? "latest") === "latest" ? "active" : "" }}" href="{{ route("home", array_merge(request()->except("sort"), ["sort" => "latest"])) }}">Terbaru</a></li>
+          <li><a class="dropdown-item {{ request()->sort === "price_asc" ? "active" : "" }}" href="{{ route("home", array_merge(request()->except("sort"), ["sort" => "price_asc"])) }}">Harga Termurah</a></li>
+          <li><a class="dropdown-item {{ request()->sort === "price_desc" ? "active" : "" }}" href="{{ route("home", array_merge(request()->except("sort"), ["sort" => "price_desc"])) }}">Harga Termahal</a></li>
+          <li><a class="dropdown-item {{ request()->sort === "name_asc" ? "active" : "" }}" href="{{ route("home", array_merge(request()->except("sort"), ["sort" => "name_asc"])) }}">Nama A-Z</a></li>
         </ul>
       </div>
     </div>
@@ -149,7 +149,7 @@
 </div>
 
     {{-- RESULTS HEADER --}}
-    @if($q || $activeCategory !== 'All' || $activePrice !== 'all')
+    @if($q || $activeCategory !== "All" || $activePrice !== "all")
     <div class="results-header mb-4">
       <h2 class="results-title">Hasil Pencarian</h2>
       <span class="results-count">{{ $items->count() }} tempat ditemukan</span>
@@ -167,13 +167,13 @@
       <div class="row g-4">
         @foreach($items as $item)
           <div class="col-6 col-md-4 col-lg-3">
-            <a href="{{ route('item.show', $item) }}" class="item-link">
+            <a href="{{ route("item.show", $item) }}" class="item-link">
               <div class="item-card">
                 <div class="item-image">
                   <img src="{{ $item->image_url }}" alt="{{ $item->name }}" loading="lazy" />
                   <span class="item-badge">
-                    @if($item->category === 'Culinary') 🍜
-                    @elseif($item->category === 'Kost') 🏠
+                    @if($item->category === "Culinary") 🍜
+                    @elseif($item->category === "Kost") 🏠
                     @else 🚌
                     @endif
                   </span>
@@ -194,9 +194,10 @@
 
 {{-- FLOATING BOTTOM NAV (Mobile) --}}
 <nav class="bottom-nav d-lg-none fixed-bottom">
-  <a href="{{ route('home') }}" class="nav-btn flex-grow-1 text-center">🏠<span>Beranda</span></a>
-  <a href="{{ route('admin.login') }}" class="nav-btn flex-grow-1 text-center">🛡️<span>Admin</span></a>
+  <a href="{{ route("home") }}" class="nav-btn flex-grow-1 text-center">🏠<span>Beranda</span></a>
+  <a href="{{ route("admin.login") }}" class="nav-btn nav-btn-admin flex-grow-1 text-center d-none">🛡️<span>Admin</span></a>
 </nav>
+<a href="{{ route("admin.login") }}" class="admin-hidden-btn d-lg-none" aria-label="Akses Admin">🛡️</a>
 
 <style>
 :root {
@@ -477,6 +478,32 @@ body {
   align-items: center;
   gap: 4px;
   transition: color 0.2s;
+}
+
+.admin-hidden-btn {
+  position: fixed;
+  right: 16px;
+  bottom: calc(env(safe-area-inset-bottom) + 70px);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.14);
+  color: rgba(255,255,255,0.35);
+  display: grid;
+  place-items: center;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.12);
+  transition: transform 0.18s ease, opacity 0.18s ease, background 0.18s ease, color 0.18s ease;
+  opacity: 0.22;
+  z-index: 999;
+  text-decoration: none;
+}
+
+.admin-hidden-btn:hover,
+.admin-hidden-btn:focus-visible {
+  opacity: 1;
+  color: white;
+  background: rgba(255,255,255,0.24);
+  transform: translateY(-2px);
 }
 
 .nav-btn:hover, .nav-btn:active { 
