@@ -17,11 +17,12 @@
       <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
       </button>
+      <a href="{{ route("admin.login") }}" class="btn btn-outline-light btn-sm rounded-pill ms-auto admin-header-btn d-flex align-items-center justify-content-center">
+        🛡️<span class="d-none d-md-inline ms-1">Admin</span>
+      </a>
       <div class="collapse navbar-collapse" id="navbarNav">
         <div class="ms-auto">
-          <a href="{{ route("admin.login") }}" class="btn btn-outline-light btn-sm rounded-pill px-3 d-none d-xl-inline-block">
-            <span class="me-1">🛡️</span> Admin
-          </a>
+          <!-- Mobile nav items can go here if needed -->
         </div>
       </div>
     </div>
@@ -195,9 +196,9 @@
 {{-- FLOATING BOTTOM NAV (Mobile) --}}
 <nav class="bottom-nav d-lg-none fixed-bottom">
   <a href="{{ route("home") }}" class="nav-btn flex-grow-1 text-center">🏠<span>Beranda</span></a>
-  <a href="{{ route("admin.login") }}" class="nav-btn nav-btn-admin flex-grow-1 text-center d-none">🛡️<span>Admin</span></a>
+  <a href="{{ route("admin.login") }}" class="nav-btn flex-grow-1 text-center">🛡️<span>Admin</span></a>
 </nav>
-<a href="{{ route("admin.login") }}" class="admin-hidden-btn d-lg-none" aria-label="Akses Admin">🛡️</a>
+<a href="{{ route("admin.login") }}" class="admin-hidden-btn d-none d-lg-grid" aria-label="Akses Admin">🛡️</a>
 
 <style>
 :root {
@@ -480,35 +481,46 @@ body {
   transition: color 0.2s;
 }
 
-.admin-hidden-btn {
+..admin-hidden-btn {
   position: fixed;
   right: 16px;
-  bottom: calc(env(safe-area-inset-bottom) + 70px);
+  bottom: calc(env(safe-area-inset-bottom) + 16px);
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  background: rgba(255,255,255,0.14);
-  color: rgba(255,255,255,0.35);
   display: grid;
   place-items: center;
   box-shadow: 0 10px 24px rgba(0,0,0,0.12);
-  transition: transform 0.18s ease, opacity 0.18s ease, background 0.18s ease, color 0.18s ease;
-  opacity: 0.22;
+  transition: transform 0.18s ease, background 0.18s ease, color 0.18s ease, opacity 0.18s ease;
   z-index: 999;
   text-decoration: none;
+  background: rgba(255,255,255,0.95);
+  color: var(--text);
+  opacity: 1;
 }
 
 .admin-hidden-btn:hover,
 .admin-hidden-btn:focus-visible {
-  opacity: 1;
-  color: white;
-  background: rgba(255,255,255,0.24);
   transform: translateY(-2px);
+  opacity: 1;
 }
 
 .nav-btn:hover, .nav-btn:active { 
   color: var(--primary); 
 }
+
+.admin-header-btn {
+  min-width: 100px;
+  height: 38px;
+  gap: 6px;
+  padding: 0 12px;
+}
+
+.nav-btn span {
+  display: block;
+  font-size: 10px;
+}
+
 
 .nav-btn span {
   font-size: 10px;
