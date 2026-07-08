@@ -12,8 +12,8 @@
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5' fill='%231e40af'/%3E%3Cpath fill='%23fff' d='M16 10h-1V8a3 3 0 0 0-6 0v2H8a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-7a1 1 0 0 0-1-1Zm-5 5.5a1.5 1.5 0 1 1 3 0V16h-3v-.5Zm3-5.5H10V8a2 2 0 1 1 4 0v2Z'/%3E%3C/svg%3E" type="image/svg+xml" />
     <link rel="shortcut icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5' fill='%231e40af'/%3E%3Cpath fill='%23fff' d='M16 10h-1V8a3 3 0 0 0-6 0v2H8a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-7a1 1 0 0 0-1-1Zm-5 5.5a1.5 1.5 0 1 1 3 0V16h-3v-.5Zm3-5.5H10V8a2 2 0 1 1 4 0v2Z'/%3E%3C/svg%3E" type="image/svg+xml" />
 @else
-    <link rel="icon" href="https://i.ibb.co/C0W2W6f/unimus-life-culinary-logo.png?v=2" type="image/png" />
-    <link rel="shortcut icon" href="https://i.ibb.co/C0W2W6f/unimus-life-culinary-logo.png?v=2" type="image/png" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%231e40af' d='M2 8l10 4 10-4-10-5L2 8zm10 4l-8-3.2V13c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-4.2L12 12z'/%3E%3Cpath fill='%23fff' d='M12 12l-8-3.2V13c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-4.2L12 12z'/%3E%3Cpath fill='%23fff' d='M12 12.5V22h2V12.5z'/%3E%3C/svg%3E" type="image/svg+xml" />
+    <link rel="shortcut icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%231e40af' d='M2 8l10 4 10-4-10-5L2 8zm10 4l-8-3.2V13c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-4.2L12 12z'/%3E%3Cpath fill='%23fff' d='M12 12l-8-3.2V13c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-4.2L12 12z'/%3E%3Cpath fill='%23fff' d='M12 12.5V22h2V12.5z'/%3E%3C/svg%3E" type="image/svg+xml" />
 @endif
 <style>
 :root {
@@ -242,7 +242,8 @@ a[href$="/admin/login/"]:hover, a[href$="/admin/login/"]:focus {
 }
 .header-nav { display: flex; align-items: center; justify-content: space-between; }
 .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 18px; }
-.brand-icon { width: 44px; height: 44px; border-radius: 14px; background: rgba(255,255,255,.2); display: flex; align-items: center; justify-content: center; font-size: 24px; }
+.brand-icon { width: 44px; height: 44px; border-radius: 14px; background: rgba(255,255,255,.2); display: flex; align-items: center; justify-content: center; font-size: 24px; overflow: hidden; }
+.brand-icon img { width: 100%; height: 100%; object-fit: contain; }
 .nav-links { display: flex; gap: 16px; align-items: center; }
 .nav-link { color: rgba(255,255,255,.9); font-size: 14px; font-weight: 600; transition: all 0.3s ease; }
 .nav-link:hover { color: white; opacity: 1; }

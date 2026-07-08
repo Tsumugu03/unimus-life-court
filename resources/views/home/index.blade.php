@@ -18,7 +18,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <a href="{{ route("admin.login") }}" class="btn btn-outline-light btn-sm rounded-pill ms-auto admin-header-btn d-flex align-items-center justify-content-center">
-        🛡️<span class="d-none d-md-inline ms-1">Admin</span>
+        🎓<span class="d-none d-md-inline ms-1">Admin</span>
       </a>
       <div class="collapse navbar-collapse" id="navbarNav">
         <div class="ms-auto">
@@ -196,9 +196,9 @@
 {{-- FLOATING BOTTOM NAV (Mobile) --}}
 <nav class="bottom-nav d-lg-none fixed-bottom">
   <a href="{{ route("home") }}" class="nav-btn flex-grow-1 text-center">🏠<span>Beranda</span></a>
-  <a href="{{ route("admin.login") }}" class="nav-btn flex-grow-1 text-center">🛡️<span>Admin</span></a>
+  <a href="{{ route("admin.login") }}" class="nav-btn flex-grow-1 text-center">🎓<span>Admin</span></a>
 </nav>
-<a href="{{ route("admin.login") }}" class="admin-hidden-btn d-none d-lg-grid" aria-label="Akses Admin">🛡️</a>
+<a href="{{ route("admin.login") }}" class="admin-hidden-btn d-none d-lg-grid" aria-label="Akses Admin">🎓</a>
 
 <style>
 :root {
